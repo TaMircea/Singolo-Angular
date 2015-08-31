@@ -9,7 +9,7 @@
   <link href='styles/normalize.css' rel='stylesheet' type='text/css'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.js"></script>
   <script src="scripts/appAng.js"></script>
 </head>
 <body>
@@ -110,14 +110,18 @@
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
       </p>
     </div>
-      <div class="displayer">
+      <div class="displayer" ng-show="app.projectZoomed" ng-click ="app.setProjectZoom(false)">
+        <div class="displayed">
+          <img ng-src="{{ app.zoomedProject.photo }}">
+          <div class = "displayer_info">{{ app.zoomedProject.info }}</div>
+        </div>
       </div>
-      <div class="filter-list" ng-repeat="project in app.projects | unique:'categories'">
-        <div ng-click="app.setCurrentCategory(project.categories)">{{ project.categories }} </div>
+      <div class="filter-list" ng-repeat="category in categories">
+        <div ng-class="{'active': category == app.currentCategory}" ng-click="app.setCurrentCategory(category)">{{ category }} </div>
       </div>
       <div class="gallery">
-        <div class="project" ng-repeat="project in app.projects | projectsFilter: app.currentCategory " > 
-          <img ng-src="{{ project.photo }}">
+        <div class="project animate" ng-repeat="project in app.projects | projectsFilter: app.currentCategory" > 
+          <img ng-src="{{ project.photo }}" ng-click="app.showInfo(project)">
         </div>
       </div>
 

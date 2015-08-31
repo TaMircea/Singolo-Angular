@@ -1,49 +1,28 @@
-var app = angular.module('portfolio', []);
-
-app.filter('unique', function() {
-    return function(input, key) {
-    	var input = input;
-        var unique = {};
-        var uniqueList = [];
-        for(var i = 0; i < input.length; i++){
-            if(typeof unique[input[i][key]] == "undefined"){
-                unique[input[i][key]] = "";
-                uniqueList.push(input[i]);
-            }
-        }
-        return uniqueList;
-    };
-});
+var app = angular.module('portfolio', ['ngAnimate']);
 
 app.filter('projectsFilter', function(){
-
     return function(projects, category) {
-
-    var filteredProjects = [];
-    var projects = projects;
-    var category = category[0];
-
-
-    angular.forEach(projects, function(project) {
-        if(project.categories == category){
-            filteredProjects.push(project);
-        }
-        if(category == "All"){
-            filteredProjects.push(project);
-        }
-    });
-    return filteredProjects;
-  }
-})
-
-
+        var filteredProjects = [];
+        var projects = projects;
+        var category = category;
+        angular.forEach(projects, function(project) {
+            if(project.categories.indexOf(category) != -1){
+                filteredProjects.push(project);
+            }
+            if(category == "All"){
+                filteredProjects.push(project);
+            }
+        });
+        return filteredProjects;
+    }
+});
 app.controller('appController', function($scope){
 	this.projects = [{
         id: 1,
         name: 'project1',
         photo: 'lib/pictures/proj1.png',
         info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum velit, impedit consectetur aspernatur eius et. Assumenda neque eius vitae, illo ipsa dignissimos cumque, minus provident sunt voluptatibus doloremque temporibus maxime!1",
-        categories: ['Artwork']
+        categories: ['Artwork', 'Graphic-Design']
       }, {
         id: 2,
         name: 'product2',
@@ -61,13 +40,13 @@ app.controller('appController', function($scope){
         name: 'product4',
         photo: 'lib/pictures/proj4.png',
         info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ratione, cumque molestiae! Consequuntur corporis placeat facilis labore aut doloribus dolorem cupiditate perferendis aliquid, a, earum ab asperiores quas repellendus ex.4",
-        categories: ['Artwork']
+        categories: ['Artwork','Graphic-Design']
         }, {
         id: 5,
         name: 'project5',
         photo: 'lib/pictures/proj5.png',
         info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi tenetur quos unde eum labore quo nisi ipsum ea. Officiis molestias explicabo, iure similique iusto! Aspernatur eligendi, et itaque! Incidunt, excepturi.5",
-        categories: ['Web-Design']
+        categories: ['Web-Design', 'Graphic-Design']
       }, {
         id: 6,
         name: 'product6',
@@ -85,7 +64,7 @@ app.controller('appController', function($scope){
         name: 'product8',
         photo: 'lib/pictures/proj8.png',
         info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel labore, vero sit autem incidunt placeat illo dolorem eaque, corrupti, dolore eum quis beatae. Fuga non nemo repudiandae labore dolore, neque.8",
-        categories: ['Web-Design']
+        categories: ['Web-Design','Artwork']
       },{
         id: 9,
         name: 'project9',
@@ -97,7 +76,7 @@ app.controller('appController', function($scope){
         name: 'product10',
         photo: 'lib/pictures/poj10.png',
         info: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores id aliquid doloribus et ipsam delectus enim repudiandae atque quasi iure pariatur nemo similique, esse, autem animi! Dolorum quas iusto id.10",
-        categories: ['Web-Design']
+        categories: ['Web-Design', 'Graphic-Design']
       }, {
         id: 11,
         name: 'product11',
@@ -112,11 +91,28 @@ app.controller('appController', function($scope){
         categories: ['Web-Design']
       }
 	];
-    this.projects[0].categories.push("All")
+    $scope.categories = ["All"];
+    angular.forEach(this.projects, function(project){
+        var cat = project.categories;
+        angular.forEach(cat, function(val){
+            if($scope.categories.indexOf(val) == -1) {
+                $scope.categories.push(val);
+                console.log(val);
+            }
+        });
+    });
     this.currentCategory = ["All"];
+    this.projectZoomed = false;
+    this.zoomedProject;
     this.setCurrentCategory = function(category){
         this.currentCategory=category;
     };
-
-
+    this.setProjectZoom = function(bool){
+        this.projectZoomed = bool;
+    };
+    this.showInfo = function(project){
+        console.log(project);
+        this.setProjectZoom(true);
+        this.zoomedProject = project;
+    }
 });
