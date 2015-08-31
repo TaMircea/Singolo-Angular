@@ -1,9 +1,7 @@
 var app = angular.module('portfolio', ['ngAnimate']);
 
 app.filter('projectsFilter', function(){
-
     return function(projects, category) {
-
         var filteredProjects = [];
         var projects = projects;
         var category = category;
@@ -18,7 +16,6 @@ app.filter('projectsFilter', function(){
         return filteredProjects;
     }
 });
-
 app.controller('appController', function($scope){
 	this.projects = [{
         id: 1,
@@ -118,6 +115,4 @@ app.controller('appController', function($scope){
         this.setProjectZoom(true);
         this.zoomedProject = project;
     }
-
-
 });
