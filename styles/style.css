@@ -1,3 +1,20 @@
+.ng-enter, 
+.ng-leave { 
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+} 
+ 
+.ng-leave.ng-leave-active,
+.ng-enter {
+    transform: rotateX(90deg) rotateZ(90deg);
+    opacity: 0;
+}        
+ 
+.ng-enter.ng-enter-active,
+.ng-leave {
+    transform: rotateX(0deg) rotateZ(0deg);
+    opacity: 1;
+
+}
 *{
   font-family: Lato;
   vertical-align: top;
@@ -187,16 +204,14 @@
 .project{
   display: inline-block;
   padding: 3px 5px 8px 5px ;
-  transition:margin 1s;
   cursor: pointer;
 }
 
 .project:nth-child(4n+1){
   padding-left: 0px;
 }
-
 .displayer{
-  display: none;
+  display: block;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -205,6 +220,10 @@
   background: rgba(77,77,77,0.8);
   z-index: 100;
   text-align: center;
+  transition:all linear 0.5s;
+}
+.displayer.ng-hide{
+  opacity: 0;
 }
 .displayer_info{
   padding: 1%;
@@ -217,38 +236,13 @@
   color: white;
 }
 .displayed{
-  margin-top: 10%;
-  
+  margin-top: 10%; 
 }
 .displayed img{
   position: relative;
   transform:scale(1.5,1.5);
 }
 
-.close-button{
-  margin: 0;
-  width: auto;
-  height: auto;
-
-  position: absolute;
-  right: 10px;
-  top: 10px;
-
-  cursor:pointer;
-  color: #fff;
-  border: 1px solid #AEAEAE;
-  border-radius: 30px;
-  background: #605F61;
-  font-size: 31px;
-  font-weight: bold;
-  line-height: 0px;
-  padding: 11px 3px; 
-  z-index: 300;
-}
-.close-button:before {
-    content: "×";
-
-}
 /* @ABOUT US */
 .about{
   padding: 70px 0px;
